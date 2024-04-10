@@ -1,6 +1,6 @@
 package de.carstenkremser.neuefische.springrecapproject.controller;
 
-import de.carstenkremser.neuefische.springrecapproject.dto.TodoDto;
+import de.carstenkremser.neuefische.springrecapproject.model.Todo;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -10,21 +10,21 @@ import java.util.List;
 public class ApiController {
 
     @GetMapping("/todo")
-    public List<TodoDto> getTodos() {
+    public List<Todo> getTodos() {
         return List.of(
-                new TodoDto(1,"Todo1","OPEN"),
-                new TodoDto(2,"Todo2","OPEN"),
-                new TodoDto(3,"Todo3","OPEN")
+                new Todo(1,"Todo1","OPEN"),
+                new Todo(2,"Todo2","OPEN"),
+                new Todo(3,"Todo3","OPEN")
         );
     }
 
     @GetMapping("/todo/1")
-    public TodoDto getTodo1() {
-        return new TodoDto(1,"Todo1","OPEN");
+    public Todo getTodo1() {
+        return new Todo(1,"Todo1","OPEN");
     }
 
     @PostMapping("/todo")
-    public String todoPost(@RequestBody TodoDto todo) {
+    public String todoPost(@RequestBody Todo todo) {
         System.out.println(todo);
         return "{}";
     }
