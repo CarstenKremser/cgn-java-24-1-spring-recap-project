@@ -16,17 +16,27 @@ public class ApiController {
 
     @GetMapping("/todo")
     public List<Todo> getTodos() {
-        return todoService.findAll();
-    }
-
-    @GetMapping("/todo/1")
-    public Todo getTodo1() {
-        return new Todo(1,"Todo1","OPEN");
+        return todoService.getAllTodos();
     }
 
     @PostMapping("/todo")
-    public String todoPost(@RequestBody Todo todo) {
-        System.out.println(todo);
-        return "{}";
+    public Todo todoPostNew(@RequestBody Todo todo) {
+        return todoService.createNewTodo(todo);
     }
+
+    @GetMapping("/todo/{id}")
+    public Todo getTodoById(@PathVariable Integer id) {
+        return todoService.getTodoWithId(id).get();
+    }
+
+    @PostMapping("/todo/{id}")
+    public Todo todoPost(@PathVariable Integer id, @RequestBody Todo todo) {
+        Todo newTodo = new Todo(
+                id,
+                todo.description(),
+                todo.status()
+        );
+        return todoService.updateTodo(newTodo);
+    }
+
 }
