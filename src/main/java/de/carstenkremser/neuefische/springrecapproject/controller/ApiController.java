@@ -1,31 +1,42 @@
 package de.carstenkremser.neuefische.springrecapproject.controller;
 
-import de.carstenkremser.neuefische.springrecapproject.dto.TodoDto;
+import de.carstenkremser.neuefische.springrecapproject.model.Todo;
+import de.carstenkremser.neuefische.springrecapproject.service.TodoService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api")
+@RequiredArgsConstructor
 public class ApiController {
 
-    @GetMapping("/todo")
-    public List<TodoDto> getTodos() {
-        return List.of(
-                new TodoDto(1,"Todo1","OPEN"),
-                new TodoDto(2,"Todo2","OPEN"),
-                new TodoDto(3,"Todo3","OPEN")
-        );
-    }
+    private final TodoService todoService;
 
-    @GetMapping("/todo/1")
-    public TodoDto getTodo1() {
-        return new TodoDto(1,"Todo1","OPEN");
+    @GetMapping("/todo")
+    public List<Todo> getTodos() {
+        return todoService.getAllTodos();
     }
 
     @PostMapping("/todo")
-    public String todoPost(@RequestBody TodoDto todo) {
-        System.out.println(todo);
-        return "{}";
+    public Todo todoPostNew(@RequestBody Todo todo) {
+        return todoService.createNewTodo(todo);
     }
+
+    @GetMapping("/todo/{id}")
+    public Todo getTodoById(@PathVariable Integer id) {
+        return todoService.getTodoWithId(id).get();
+    }
+
+    @PostMapping("/todo/{id}")
+    public Todo todoPost(@PathVariable Integer id, @RequestBody Todo todo) {
+        Todo newTodo = new Todo(
+                id,
+                todo.description(),
+                todo.status()
+        );
+        return todoService.updateTodo(newTodo);
+    }
+
 }
