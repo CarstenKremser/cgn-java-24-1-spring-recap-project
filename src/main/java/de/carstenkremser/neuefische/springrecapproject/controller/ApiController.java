@@ -1,21 +1,22 @@
 package de.carstenkremser.neuefische.springrecapproject.controller;
 
 import de.carstenkremser.neuefische.springrecapproject.model.Todo;
+import de.carstenkremser.neuefische.springrecapproject.service.TodoService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api")
+@RequiredArgsConstructor
 public class ApiController {
+
+    private final TodoService todoService;
 
     @GetMapping("/todo")
     public List<Todo> getTodos() {
-        return List.of(
-                new Todo(1,"Todo1","OPEN"),
-                new Todo(2,"Todo2","OPEN"),
-                new Todo(3,"Todo3","OPEN")
-        );
+        return todoService.findAll();
     }
 
     @GetMapping("/todo/1")
