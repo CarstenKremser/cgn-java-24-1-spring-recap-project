@@ -48,4 +48,10 @@ public class TodoService {
         System.out.println("MaxId: " + maxId);
         return maxId;
     }
+
+    public Optional<Todo> deleteTodoWithId(Integer id) {
+        Optional<Todo> todoOptional = todoRepository.findById(id);
+        todoRepository.deleteById(id);
+        return todoOptional;
+    }
 }

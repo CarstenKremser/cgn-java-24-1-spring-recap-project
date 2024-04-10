@@ -10,9 +10,9 @@ PUT /api/todo
 
 Body (JSON):
 {
-    id: IDENTIFIER ???
-    description: TODONAME
-    status: STATUS
+    id: IDENTIFIER (integer)
+    description: TODONAME (String)
+    status: STATUS (Enum)
 }
 
 mögliche STATUS-WERTE:

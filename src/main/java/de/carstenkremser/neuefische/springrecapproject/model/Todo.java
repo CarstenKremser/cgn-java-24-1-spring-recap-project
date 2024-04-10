@@ -8,6 +8,6 @@ public record Todo(
         @Id
         Integer id,
         String description,
-        String status
+        TodoStatus status
 ) {
 }

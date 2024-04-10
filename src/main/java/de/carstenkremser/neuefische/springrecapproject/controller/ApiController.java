@@ -15,12 +15,12 @@ public class ApiController {
     private final TodoService todoService;
 
     @GetMapping("/todo")
-    public List<Todo> getTodos() {
+    public List<Todo> getAllTodos() {
         return todoService.getAllTodos();
     }
 
     @PostMapping("/todo")
-    public Todo todoPostNew(@RequestBody Todo todo) {
+    public Todo createTodo(@RequestBody Todo todo) {
         return todoService.createNewTodo(todo);
     }
 
@@ -29,8 +29,8 @@ public class ApiController {
         return todoService.getTodoWithId(id).get();
     }
 
-    @PostMapping("/todo/{id}")
-    public Todo todoPost(@PathVariable Integer id, @RequestBody Todo todo) {
+    @PutMapping("/todo/{id}")
+    public Todo updateTodoPutById(@PathVariable Integer id, @RequestBody Todo todo) {
         Todo newTodo = new Todo(
                 id,
                 todo.description(),
@@ -39,4 +39,8 @@ public class ApiController {
         return todoService.updateTodo(newTodo);
     }
 
+    @DeleteMapping("/todo/{id}")
+    public Todo deleteTodoById(@PathVariable Integer id) {
+        return todoService.deleteTodoWithId(id).get();
+    }
 }
