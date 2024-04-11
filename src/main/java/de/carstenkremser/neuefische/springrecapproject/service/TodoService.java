@@ -13,6 +13,7 @@ import java.util.Optional;
 public class TodoService {
 
     private final TodoRepository todoRepository;
+    private final SpellAndGrammarService spellAndGrammarService;
 
     public List<Todo> getAllTodos() {
         return todoRepository.findAll();
@@ -29,10 +30,14 @@ public class TodoService {
     }
 
     public Todo createNewTodo(Todo todo) {
+        String newDescription = todo.description();
+        if (spellAndGrammarService != null) {
+            newDescription = spellAndGrammarService.improveText(todo.description());
+        }
         int newId = findMaxId() + 1;
         Todo newTodo = new Todo(
                 newId,
-                todo.description(),
+                newDescription,
                 todo.status()
         );
         todoRepository.save(newTodo);
